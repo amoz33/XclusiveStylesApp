@@ -25,6 +25,51 @@ class Admin_login extends CI_Model {
             return false;
         }
     }
+    
+    public function get_user($where) {
+
+        //var_dump($where);
+
+        $query=$this->db->get_where('mobile_app_users',$where);
+        if($query->num_rows() > 0){
+            $data = $query->row_array();
+            return $data;
+        }else{
+
+            return false;
+        }
+    }
+    
+    public function get_all_users() {
+        
+        $this->db->select('*');
+        $this->db->from('mobile_app_users');
+        
+        $query = $this->db->get();
+        if($query->num_rows() > 0){
+            $data = $query->result_array();
+            return $data;
+        }else{
+
+            return false;
+        }
+    }
+
+    public function get_one_user($id) {
+        
+        $this->db->select('*');
+        $this->db->from('mobile_app_users');
+        $this->db->where($id);
+        
+        $query = $this->db->get();
+        if($query->num_rows() > 0){
+            $data = $query->result_array();
+            return $data;
+        }else{
+
+            return false;
+        }
+    }
 
      function get_one_record($table, $where=NULL, $order=NULL,$like=NULL){
     

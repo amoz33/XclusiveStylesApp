@@ -9,15 +9,56 @@ class Get_images extends CI_Model {
 
     }
 
-    public function getCategoryImages($table_name) {
+    public function getCategoryImages($table_name,$limit='') {
 
         $this->db->select('*');
         $this->db->from($table_name);
+        if($limit){
+           $this->db->order_by('id','DESC');
+           $this->db->limit($limit);
+        }
         //$this->db->where($categoryID);
 
         $query = $this->db->get();
         if($query->num_rows() > 0){
             $data = $query->result_array();
+            return $data;
+            
+        }else{
+
+            return false;
+        }
+    }
+    
+    
+    public function getCategoryImagesMobile($table_name,$categoryID) {
+
+        $this->db->select('*');
+        $this->db->order_by('id','DESC');
+        $this->db->from($table_name);
+        $this->db->where($categoryID);
+        $this->db->limit("20"); 
+        
+        $query = $this->db->get();
+        if($query->num_rows() > 0){
+            $data = $query->result_array();
+            return $data;
+        }else{
+
+            return false;
+        }
+    }
+    
+    public function getCategoryImagesMobile2($table_name,$categoryID) {
+
+        $this->db->select('*');
+        $this->db->from($table_name);
+        $this->db->where($categoryID);
+        $this->db->limit("1");
+        
+        $query = $this->db->get();
+        if($query->num_rows() > 0){
+            $data = $query->row_array();
             return $data;
         }else{
 
